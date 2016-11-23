@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-
+from django.contrib import admin
 # Create your models here.
 class Producto(models.Model):
     Ropa='Ro'
@@ -34,3 +34,13 @@ class Compra (models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.IntegerField()
     fecha = models.DateTimeField(default=timezone.now)
+
+class CompraInLine(admin.TabularInline):
+    model = Compra
+    extra = 1
+
+class ProductoAdmin(admin.ModelAdmin):
+    inlines = (CompraInLine,)
+
+class UsuarioAdmin (admin.ModelAdmin):
+    inlines = (CompraInLine,)
